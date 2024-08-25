@@ -4,13 +4,36 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
 
 import { images } from "../../constants";
-import { CustomButton, FormField } from "../../components";
+import { CustomButton, FormField } from "../../components"
+import { signIn } from "../../lib/appwrite";
 
 const SignIn = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+
+  const submit = async () => {
+    if (!form.email || !form.password) {
+      Alert.alert('Error', 'Please fill all the field!');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await signIn(form.email, form.password); 
+
+      router.replace('/home');
+    } catch (error) {
+      Alert.alert('Error', error.message)
+    }
+    finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -47,6 +70,7 @@ const SignIn = () => {
             title="Sign In"
             handlePress={submit}
             containerStyles="mt-7"
+            isLoading={isSubmitting}
           />
 
           <View className="flex justify-center pt-5 flex-row gap-2">
@@ -57,7 +81,7 @@ const SignIn = () => {
               href="/sign-up"
               className="text-lg font-psemibold text-secondary"
             >
-              Signup
+              Sign up
             </Link>
           </View>
         </View>
