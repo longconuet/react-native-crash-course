@@ -4,12 +4,13 @@ import { useState, useEffect } from "react";
 
 import { images } from "../../constants";
 import { SearchInput, Trending, EmptyState, VideoCard } from "../../components";
-import { getAllPosts } from "../../lib/appwrite";
+import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import useAppwrite from '../../lib/useAppwrite';
 
 const Home = () => {
   const [refreshing, setRefreshing] = useState(false)
   const {data: posts, refetch} = useAppwrite(getAllPosts);
+  const {data: latestPosts} = useAppwrite(getLatestPosts);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -55,7 +56,7 @@ const Home = () => {
               </Text>
 
               <Trending 
-                posts={[{id: 1}, {id: 2}, {id: 3}]} 
+                posts={latestPosts} 
               />
             </View>
           </View>
