@@ -28,7 +28,7 @@ const VideoCard = ({video : {title, thumbnail, video, creator: {username, avatar
                     </View>
                 </View>
 
-                <View>
+                <View className='pt-2'>
                     <Image 
                         source={icons.menu}
                         className='w-5 h-5'
