@@ -9,10 +9,10 @@ const SearchInput = ({
   placeholder,
   handleChangeText,
   otherStyles,
-  ...props
+  initialQuery
 }) => {
   const pathname = usePathname();
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(initialQuery || '')
 
   return (
     <View className="w-full h-16 px-4 bg-black-100 rounded-2xl border-2 border-black-200 focus:border-secondary flex flex-row items-center space-x-4">
@@ -38,11 +38,11 @@ const SearchInput = ({
             }
           }}
         >
-            <Image 
-                source={icons.search}
-                className='w-5 h-5'
-                resizeMode="contain"
-            />
+          <Image 
+              source={icons.search}
+              className='w-5 h-5'
+              resizeMode="contain"
+          />
         </TouchableOpacity>
     </View>
   );
